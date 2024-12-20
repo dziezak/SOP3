@@ -2,6 +2,8 @@
 #include <pthread.h>
 #include <unistd.h>
 
+//stworzenie watku na spokojnie
+
 void *hello_world(void *arg) {
     char *s = (char *) arg;
     printf("Hello %s!\n", s);

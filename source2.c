@@ -3,6 +3,7 @@
 #include <pthread.h>
 #include <unistd.h>
 
+//tworzymy watek i prosimy aby zwracal swoje id
 //gcc -pthread source.c -o o
 
 void *hello_world(void *arg) {
