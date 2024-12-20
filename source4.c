@@ -4,17 +4,30 @@
 #include <unistd.h>
 
 //time to use more than one thread
+
 #define THREAD_COUNT 16
+pthread_mutex_t counter_lock;
 
 int counter = 0;
-
-//tworzymy thread
-void *incrementer_thread(void *arg) {
-    printf("Start thread.");
+//niepoprawne udostepnianie srodkow do plikow
+void *incrementer_thread0(void *arg) {
+    pthread_t thread_id = pthread_self();
+    printf("Start thread {%d}.\n", thread_id);
     int temp = counter;
     sleep(1);
     counter = temp + 1;
-    printf("Done.");
+    printf("Done thread {%d}.\n", thread_id);
+}
+
+void *incrementer_thread(void *arg){
+    pthread_t thread_id = pthread_self();
+    printf("Start thread {%d}.\n", thread_id);
+    pthread_mutex_lock(&counter_lock);
+    int temp = counter;
+    sleep(1);
+    counter = temp + 1;
+    pthread_mutex_unlock(&counter_lock);
+    printf("Done thread {%d}.\n", thread_id);
 }
 
 int main(int argc, char* argv[]) {
