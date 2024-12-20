@@ -43,6 +43,7 @@ void *reader_thread(void *arg){
 
 void *writer_thread(void *arg){
     pthread_t thread_id = thead_self();
+    printf ("{%d} Start writing")
 }
 
 int main(int argc, char* argv[]) {
