@@ -19,6 +19,7 @@ void *incrementer_thread0(void *arg) {
     printf("Done thread {%d}.\n", thread_id);
 }
 
+//poprawne udostepnienie srodkow do plikow
 void *incrementer_thread(void *arg){
     pthread_t thread_id = pthread_self();
     printf("Start thread {%d}.\n", thread_id);
