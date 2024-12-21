@@ -20,6 +20,12 @@ typedef struct argsEstimation{
     int samplesCount;
 } argsEstimation_t;
 
+//Impementujemy wlasna funkcje rand_r bo windows moment:
+int rand_r2(UINT *seed){
+    *seed = *seed * 1103515245 + 12345;
+    return (unsigned int)(*seed / 65536) % 32768;
+}
+
 void ReadArguments(int argc, char**argv, int *threadCount, int *samplesCount){
     *threadCount = DEFAULT_THREAD_COUNT;
     *samplesCount = DEFAULT_SAMPLE_SIZE;
@@ -39,7 +45,7 @@ void ReadArguments(int argc, char**argv, int *threadCount, int *samplesCount){
         }
     }
 }
-void *pi_estimation(void *args);
+//void *pi_estimation(void *args);
 
 void *pi_estimation(void *voidPtr){
     argsEstimation_t *args = voidPtr;
@@ -49,8 +55,8 @@ void *pi_estimation(void *voidPtr){
 
     int insideCount = 0;
     for(int i=0; i<args->samplesCount; i++){
-        double x = ((double)rand() / (double)RAND_MAX);
-        double y = ((double)rand() / (double)RAND_MAX);
+        double x = ((double)rand_r2(&args->seed) / (double)RAND_MAX);
+        double y = ((double)rand_r2(&args->seed) / (double)RAND_MAX);
         if(sqrt(x*x + y*y) <= 1.0)
             insideCount++;
     }
